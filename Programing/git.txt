@@ -1,0 +1,5 @@
+to commit from your git terminal we use 
+git remote add origin https://github.com/YoshiBigSmoke/learning-notes.git
+git branch -M main
+git push -u origin main
+
