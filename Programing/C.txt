@@ -1,4 +1,16 @@
-this will be notes for C
+in this section we will be talking about the 
+programing Lenguage C.
+
+we are going to use the character #
+for expressing the comentaries on a code followed by 
+by the code on its left.
+
+
+(you weill need a C compiler)
+
+its important when you use C use the directory "main" as the 
+main file that run all the code
+
 
 way to make changes using USRT64
 
@@ -17,7 +29,8 @@ int main(){
 for make a space betwen each comand we use "\n"
 comments: //
 
-variables:
+- variables -
+
 -int (name) (number); %d [integer] to tell the 
 program that we want to print or show an integer 
 variable
@@ -42,7 +55,7 @@ you can add to it %+d to know the symbol
 -%.2(letter): for only show 2 numbers only
  
 
-if statements:
+-if statements-
 
 if (variable){
     #code;
@@ -50,3 +63,38 @@ if (variable){
 else (variable){
     #code;
 }
+
+
+-Read inputs -
+
+scanf("%d", &edad)
+
+
+- while loops -
+
+while (#condition) {
+
+}
+
+- Random number -
+rand() is the name of the funcition that allowes
+you to make random number BUT we need to understand
+that we do no generate random number we just do 
+pseudoaleatories pseudorandom that follow a 
+matematic secuense.
+
+its important that we use 
+#include <stdio.h> # for rand() and srand()
+#include <stdlib.h>  # for time()
+
+seed-a number that use when to be a starter point 
+and generates 
+
+when we use the libarary we need to specify our
+seed:
+
+
+srand(time(NULL)); <--- seed 
+
+
+
