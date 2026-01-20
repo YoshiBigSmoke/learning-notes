@@ -1,0 +1,52 @@
+this will be notes for C
+
+way to make changes using USRT64
+
+is by :
+gcc main(file).c -o main.exe
+
+
+one way to start C programas is by:
+
+#include <stdio.h>
+int main(){
+    #code;
+    return 0;
+}
+
+for make a space betwen each comand we use "\n"
+comments: //
+
+variables:
+-int (name) (number); %d [integer] to tell the 
+program that we want to print or show an integer 
+variable
+-float (name) (number); %f to display a decimal 
+number
+-char (name) (symbol); %c [symbol] this will make
+a symbol in the screen
+Warning: in C we canot plug strings C does not 
+support it for that we use an array 
+
+char (name) [];  %s to display it on the print 
+
+for including boolians first we have to importet 
+to the file by adding 
+#include <stdbool.h>
+bool (name) = 1, 0 (True or False) %d
+%(number)d : to know how the width of a variable
+and show it
+
+you can add to it %+d to know the symbol
+-%+d 
+-%.2(letter): for only show 2 numbers only
+ 
+
+if statements:
+
+if (variable){
+    #code;
+}
+else (variable){
+    #code;
+}
