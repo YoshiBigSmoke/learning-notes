@@ -1,14 +1,23 @@
-git status
 
-to know about what we dont send to the repository on github
+{
+git remote add origin https://github.com/YoshiBigSmoke/learning-notes.git
+git branch -M main
+git push -u origin main
+} all this line is to make it in git bash
+make sure that you use this command, so that
+way you can make commits eassly following this steps
 
-git add . #for everythyng
+git status #know what dos not have change and dint upload
+#in the original repository
+
+git add . #for add everythyng (recomended)
 
 git add (file) #for a specific file
 
-git commit -m "modify " #to confirm it 
+git commit -m "text about your modify" #to confirm it 
 
-git push origin (name of the main file) #to send it 
+git push origin (name of the main file usually main) #to send it 
 
 this is the simplest way to make a commit on git
-to sent it to github
+to sent it to 
+
