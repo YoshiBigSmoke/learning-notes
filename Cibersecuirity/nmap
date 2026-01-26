@@ -1,0 +1,16 @@
+a quick way to scan a machine is with:
+sudo nmap -sS -T4 --open --top-ports 20 (ip)
+
+for scan TCP and UDP (but this scan ALL the open ports)
+sudo nmap -sS -sU -p- <target>. 
+
+you can select a limit by adding a number like this:
+-sudo nmap -sS --top-ports 1000 <target>
+sudo nmap -sS -p- --min-rate 5000 <target>
+
+there are ways to scan ips or router by a sniky way 
+
+-sS # 
+
+- sudo nmap -sS -T2 192.168.1.5
+- sudo nmap -sS -p22,80,443 192.168.1.1

@@ -1,0 +1,13 @@
+bash is the programing language that can communicate 
+with Linux, 
+it can: 
+-create files
+-delete files
+-move files
+-and copy files
+
+awk is a for that we can 
+
+$( commands ) <--- with this expreccion we can 
+make on our code comdans to the console, and with
+awk, we write that and save it 
