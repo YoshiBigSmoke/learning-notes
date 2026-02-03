@@ -1,0 +1,44 @@
+In this scenario, we are going to talk about DNS (Domain Name System) and why it is a critical component of network security in home routers.
+
+To begin, open Command Prompt (CMD) on Windows and run:
+-nslookup google.com
+
+this will give a result with the server web site and your router.
+
+this because the way that the internet work is by
+
+Device → DNS Resolver → IP → Web Server
+
+but this method by standar is insecured
+this because some routers does not protect their petition to  websites 
+being a fatal error, because with it you can get redirect or a man-in-the-middle can take
+your info or making you to get on a phising web site, to pretend to be an organization 
+to steal yor data or money
+
+to protect us against it its important that we use the following DNS protocols 
+
+go to:
+Control Panel →
+Network and Sharing Center →
+Change adapter settings →
+Right click your active network →
+Properties →
+Internet Protocol Version 4 (TCP/IPv4)
+
+
+leave the ip addres and at the buttom add:
+
+Primary DNS:   9.9.9.9
+Secondary DNS: 149.112.112.112
+
+
+this ip is an primary ip addres to Quad9 a free public DNS
+
+what Quad9 does it that if you are redirected or open an phising web site
+Quad9 will check in its bast DATABASE, to se the reputation of it.
+then it will let you know
+
+plus:
+
+turn of the  Internet Protocol Version 6 (TCP/IPv6)
+this configuration interfered on the Quad9 protocol and its important that is turned off
