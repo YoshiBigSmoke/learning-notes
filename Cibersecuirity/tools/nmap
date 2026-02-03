@@ -1,0 +1,39 @@
+a quick way to scan a machine is with:
+sudo nmap -sS -T4 --open --top-ports 20 (ip)
+
+for scan TCP and UDP (but this scan ALL the open ports)
+sudo nmap -sS -sU -p- <target>. 
+
+you can select a limit by adding a number like this:
+-sudo nmap -sS --top-ports 1000 <target>
+sudo nmap -sS -p- --min-rate 5000 <target>
+
+there are ways to scan ips or router by a sniky way 
+
+-sS # 
+
+- sudo nmap -sS -T2 192.168.1.5
+- sudo nmap -sS -p22,80,443 192.168.1.1
+
+a fastest way to make a scan is by 
+nmap -p- --open --min-rate 1000 - -Pn -n -sS -vvv (ip)
+in min rate --min-rate never use more than 1001+
+because it will  be detected by the fire walls and 
+the scan can fail
+
+for scaning your own network
+-sudo nmap -sS -p- -PR $Sip
+
+IOS (IPADS, IPHONES AND APPLE WATHC) WARNING
+ios by default block:
+-ICMP
+-SYN probes
+- do not respond to a active found
+
+Nmap will assume: Host seems Down
+
+also is important to mention that IOS is a secure system
+but, if you have its ip and its  connected to your wifi,
+it will (or you have the ip router) it will sho its traffic
+
+-sn (no port scan its primarly used for host discovery commonly known as a "ping sweep") 
