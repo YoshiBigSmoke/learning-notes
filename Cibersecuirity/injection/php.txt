@@ -1,0 +1,29 @@
+file incliusion vulnerability 
+
+this vulnerability occurs when a web application  use:
+- arma paginas dinamicas
+- usando datos que vienen del usuario 
+- y confia demasiado en esos datos 
+
+instead of using perrmited files use the not desire files
+
+LFI: ocurre cuanddo el atacante logra que la web incluya un archivo local del servidor que no estaba pensado como pcion 
+
+"local" = en el mismo sistema en donde corre 
+
+-the web page wait sfor a "normal file" 
+-trust on what he gets 
+-do not check what its resieve 
+-do not clean the input
+
+it will show what ever you ask the server.
+
+for this attack we use the ( ../ )
+
+anoalogicamente 
+c:\
+|>web 
+|>|>pages
+|>|>|>index.php
+
+
