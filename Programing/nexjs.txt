@@ -1,0 +1,3 @@
+this are notes for next js:
+
+for a better loading of
