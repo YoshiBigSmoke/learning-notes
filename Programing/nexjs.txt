@@ -1,5 +1,54 @@
 this are notes for next js:
-
+# comands
 for a better loading of
-1asd
-asdads
+
+ + <Link href="location"> <Link>
+This command lets you procces the page better the browser 
+by only loading that only file and not the hole web page
+
+
+
+#keep in mind
+rendering enviroment
+
+Client and server controlers
+this are ways browsers use the loading engine 
+
++ Client site rendering:
+is  a common (but less secure) way to load data from a web page
+it have:
+ #large bunde
+ #Resource leaks 
+ #No SEO
+ #less secure
+making it by default the worse way to use the engine browser machine
+
++Server side rendering:
+the most modern way to load websites
+solve most of the problems that Client rendering have making it
+better
+  #small bundle
+  #No resource leaks
+  #SEO
+  #more secure
+
+HOEVER 	we if you use server side rendering you will lose some features
+- canot hear of browser events
+- cannot acces browser apis
+- cannot mantain state
+- cannot use efects 
+
+NEXT JS is made from the second one, so we have to specify it on the file
+by typing on the top of the file  'use client';
+
+this command shoul ONLY USE WHEN IT TOTALY NECESARY
+because from there bots can start searching on the web and notice your component if its host
+
+is always better to use the default one but if 
+you really need it its better to create two files
+
+- the one that have the extension 'use client';
+- another one that gets it, and show it 
+
+all of this in different files but with the same direction and flow
+
