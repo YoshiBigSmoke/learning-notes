@@ -1,0 +1,71 @@
+in this section we are going to talk about Rust the programing lenguage 
+that works similar to C and C++ being a code lenguaje that can control 
+hardware just like C can do.
+
+first stem:
+Cargo.lock - is used to managed version and name of your proyect 
+adn dependecies
+
+
+ # Ways to run cargo and test your program #
+
+* Cargo build = this is for compiling if you need the exe
+* Cargo Run = the most used way to run a program in Rust
+* Cargo Check = just verify that can Run
+* Cargo build --realase = run Rust at the fastest way possible allowed, 
+(waring if you touch the hardware with this can damaged it)
+
+all exe are in target/debug/file
+Relese = target/ release/file
+
+for a inmutable variable use let 
+
+^ let variable = info;
+
+for hole numbers: 
+
+^ let entire: i32 = 42;
+^ let flotante: f64 = 2.99;
+^ let boolean: bool = True;
+^ let caracter: char= 'A';
+^ let text: &str = "Hi";
+" let string: String = String::from("hi");
+
+for constants just change the Let option.
+
+
+to read inputs and outputs use the library 
+
+use std::io;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
