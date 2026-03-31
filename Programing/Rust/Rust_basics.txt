@@ -15,6 +15,7 @@ adn dependecies
 * Cargo build --realase = run Rust at the fastest way possible allowed, 
 (waring if you touch the hardware with this can damaged it)
 
+
 all exe are in target/debug/file
 Relese = target/ release/file
 
@@ -32,11 +33,87 @@ for hole numbers:
 " let string: String = String::from("hi");
 
 for constants just change the Let option.
-
-
+	
 to read inputs and outputs use the library 
 
 use std::io;
+fist add: ^let mut guess = String::new();
+short way ^io::stdin().read_line(&mut guess).expect("Failed to read line");
+
+@(note) - you can do one single line comand, and make it 
+shorter hoever be carefull, because it can be difficult to 
+read for a person
+
+@(note) - its important when you use the io libary to read inputs
+you have to put an expect, if not is going to give you 
+error
+
+this is how you manage using variables on a string
+^ printl!("x ={x} and y + 2 = {}", y + 2};
+ to use dependecies 
+
+to make an exe in Rust, you must follow this steps:
+^ cargo add rand [this will make the rand, version on our cargo.toml]
+^ cargo build
+
+you can run exe with ^cargo run^ but its best to use ^cargo build^
+@(note) use: ^cargo build --realease 
+to make it oficial the exe and save it
+and you can find your exe in target/release/file.exe
+
+{	Random library		}
+
+the main import is: ^ use rand::Rng;
+
+let secret_number = rand::thread_rng().gen_range(1..=100);
+
+
+{	Compare results		}
+compare numbers and mak it as a conecction you have tu use the library
+^ use std::cmp::ordering;
+
+
+
+@(note) always to call a library use: ^ use {library}
+
+{		Conditionals 		}
+they are kind like the same as python 
+ 			   !this is an &	
+example if input == "salir || input == exit || input == "!{
+code
+}
+
+### Conditionls  ###
+{		Loops		}
+
+for loops use loops{}, but remember to breakit wih ^break;
+
+* if
+* else
+* else if
+* Match 
+* while let
+
+(((for match)))
+^ match x.cmp(&y){
+^  Ordering::Less => result (printl!)
+^  Ordering::Greater => result
+^  Ordering::Equal => result
+^ }
+(((if)))
+if x == y {
+printlnQ("true"
+}
+$$$
+for if all the symbols that you will use in all your rust path will be this ones:
+== the same as 
+> grater than
+< less than 
+!= not equal
+>= more or equal 
+<= less or equal 
+&& Logical and 
+! logical not
 
 
 
@@ -45,27 +122,16 @@ use std::io;
 
 
 
+all this conditionals in Rust are used for specific
+
+
+{ 		Lists/Vec		}
+in rust we have first to defined it as a vecto by assignin first 
+
+^ let mut numeros: Vec<i32> = Vec::new(); //made a ampty vec
+^ let mt numeros = vec![10,20,30,40,50]; //made a list
+^ let mut nombre: Vec<String> = Vec::with_capacity(10);//made a limit
+// Vec more eficient if you know the length
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
