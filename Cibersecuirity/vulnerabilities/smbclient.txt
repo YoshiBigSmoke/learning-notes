@@ -1,0 +1,23 @@
+smbclient
+
+in this file we are going to talk about how smbclient 
+really works. 
+
+SMB (server Message Block) its a protocol from windows that shares
+files, directories, printers, tools in machines. 
+(@note- this tecnique can be use in your own wifi to access)
+(@note - this will not give you acces to a pc for that we use 
+other tools, and exploits, but this will help you find share files that are expose)
+this attack can be done in any public wifi that have a machine listening for fort 1443 or 445
+
+todays date - this attack is not usefull on a home wifi because 
+now windows by default close that gate 
+but is still usefull on companies on with old systems ,somebody activated without knowing , irresposable companies.
+
+
+when you are there you have to do the comand ^get (file)
+to save that file and it will save in your linux or pc 
+
+
+
+

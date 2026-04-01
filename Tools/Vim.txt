@@ -1,0 +1,8 @@
+here are my notes for Vim only using the vscode extension meaning 
+that this is the begginer guide of vim usage 
+
+to move in vim to a specific line of code do:
+=> [Esc] //to open the Vim comand line 
+@(note): you have  to use it every time that you whant to use Vim comands
+=> (number) //this will 
+

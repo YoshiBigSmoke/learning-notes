@@ -1,0 +1,24 @@
+2026-03-31
+
+in here we are going to talk about impacket the swish knife to 
+interact with internet protocols working in low level
+use python scripts to execute the following examples:
+
+it use python to execute comands 
+
+% execute remote comands in windows %
+# psexe.py user:password@
+
+% use shell via WMI 
+wmiexec.py usser:password@IP 
+
+% relay attack NTLM %
+# ntlmrelayx.py
+
+% SMB fake server to catch hashes %
+
+smbserver.py 
+
+
+
+

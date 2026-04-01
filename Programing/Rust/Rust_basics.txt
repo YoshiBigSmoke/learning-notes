@@ -104,7 +104,7 @@ for loops use loops{}, but remember to breakit wih ^break;
 if x == y {
 printlnQ("true"
 }
-$$$
+
 for if all the symbols that you will use in all your rust path will be this ones:
 == the same as 
 > grater than
@@ -134,4 +134,37 @@ in rust we have first to defined it as a vecto by assignin first
 // Vec more eficient if you know the length
 
 
+## Funtions in Rust ## 
+
+^ fn main (){
+    //code 
+  }
+this is the basic way to use a Funtion being the main Funtion
+however if you want to make a function out of the main variable 
+being a independent function
+
+
+with a return 
+^ fn plus(x:i32, b:i32) -> i32{
+    //code 
+  }
+its important to know that when it give a return do not 
+ad the ; at the end of the code.
+
+^ Struct dog {
+    name:"snoopy", 
+    age: i32,
+  }
+
+struct  is a box that specify what type of parameters the 
+line going to get 
+
+impl dog {
+    fn bark(&self){
+      println!("{} bark", self.name )
+      }
+  }
+
+mpl- is the way that we implement code to the struct 
+and connect each other 
 
