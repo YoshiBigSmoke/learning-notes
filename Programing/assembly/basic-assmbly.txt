@@ -1,0 +1,64 @@
+2026-04-02
+
+in this file we are going to talk about reciber and the mother of all the lenguajes 
+Assembly code
+
+Assembly code is the code that we use in todays industry for:
+- make programs faster 
+- analise malver 
+- RE 
+- fisical macine conections 
+
+this are some but actually Assembly have many uses on todays date 
+
+(@note Assembly work different in differents CPUS)
+this mean that the assemlby code from your pc, its going to be different to the assembly code from your  phone
+
+x86 - was created by intel 
+
+also known that many different companys have made assemlby lenguajes like the Atnt one 
+but all of them do the same send binary to the code
+
+(@note - you will be using binary hexadecimal numbers so, be sure to study them or at least have a cheat paper to know about what you 
+will find there in most cases RE have hex number)
+
+all the Registers: rax, rbx, rcx, rdx, rsi, rdi, rsp, rbp 
+
+this list are expamples of use variable to store info in the memory 
+(@note- the orden that you use it donst matter this list are just way to save data and work with more data)
+
+mov rax 130 #add 130 to the rax variable 
+mov rbx 120 #add 120 to the rbx variable 
+add rbx rax # add rax + rbx 
+
+% important %
+the way the lenguaje read is vi this 
+
+push {1st} rax {3rd} 12 {2nd}
+
+for more info make sure you study Assembly Lengauej because its one of the most complex 
+
+#### conditionals  ####
+
+mov cx 1337
+jnz STAY_LEET <---jnz 
+mov cx, 0
+STAY_LEET:
+push rcx
+
+je |jump if equal 
+jne | jump if not equal 
+jg | jum if grater 
+jl | jump if left 
+jle | jump if else or not equal 
+jge | jump if grater than or equal 
+ja | jump if above (unsigned)
+jb | jump if below (unsigned)
+jae | jump if above or equal (unsigned)
+jbe | jum if below or equal  (unsgined)
+js | jump if signed
+jns | jump if not signed 
+jo | jump if overflow 
+jno | jump if not overflow
+jz | jump if zero 
+jnz | jump if not zero 
