@@ -1,0 +1,64 @@
+in this section im going to talk about the defensive side 
+and how to know if some one is attacking you 
+
+in Linux kernel:
+$ who (@to know how is log in that computer)
+$ w (@details of what he is doing)
+$ last (@to see the historial of logs)
+$ sudo lastb (@fail antenmts ti login)
+
+to catch a malisious proces:
+
+$ ps auxf (@tree proces)
+$ ss -tulpn (@open ports + what procces has it)
+$ lsof -i (@check wifi conection in progress)
+
+( ^ all of this should are ways attackers use your pc and all of this comands should help you to identify an intruser ^ )
+
+check if a critial file has been modified 
+$ find /etc /usr/bin /home -mtime -1 -type f 2>/dev/null
+
+
+
+constabs and persistent services:
+crontab -l
+  systemctl list-units --type=service --state=running
+  cat /etc/crontab
+  ls /etc/cron.d/
+
+
+~) possibble man in the middle
+$ arp -n  (@arp table)
+$ ip eigh  (@modern alternative)
+
+## preguntar que hace 
+
+look certs in websites 
+
+openssl s_client -connect google.com:443 </dev/null 2>/dev/null | openssl
+  x509 -noout -issuer -subjectreal time wifi trafic:
+
+(if its not a local user may be encripted)
+
+$ sudo tcpdump -i any -n port 80 or port 443 (@basic)
+$ sudo nethogs (@per process)
+$ sudo wireshark (@GUI, and more detailed)
+
+spywares 
+$ ss -tulpn 
+$ netstat -anp | grep ESTABLISHED 
+
+
+keyloggers: 
+$ lsmod | grep -i input
+$ ls /proc/*/exe 2>/dev/null | xargs ls -la 2>/dev/null | grep -v "Permission denied"
+
+
+more tools: 
+audird -> syscalls and see file acces
+fail2ban -> block brootforces and ssh/services 
+rhunter/chrootkir --> detet rootkits 
+AIDE --> see integrity of a file 
+suricata/snort --> IDS 
+osquery -> os consults like a database SQL 
+
