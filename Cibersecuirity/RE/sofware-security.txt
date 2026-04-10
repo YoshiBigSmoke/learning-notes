@@ -1,0 +1,35 @@
+here we are going to talk about how programs defend it self against
+Reverse Enegeniering 
+
+Stack Canary:
+-put a random numver between you buffer and the retur addres 
+-before it retur check if the value change
+- if it change close the program 
+
+ASL:
+- every time you run the program the memory alocate it self in 
+  different directions, tack, heap libraries every thing in a differen
+  place 
+
+DEP / NX - no execute 
+what it does? marc the region on the memory like not executable,
+the stack save the data and nx cannot execute the code,
+if you put shellcode in the stack the cpu denied to execute
+
+(@note - in that case you have to use more complex tecnics like ROP chain)
+
+PIE:
+the binary code redirects to a random addres like ASLR but just 
+for executables 
+
+more protection 
+-obfuscacion: code that is intencionaly wird, whitout logic
+-anti-debuggin: detect if GDB is open and close
+-packing: the binary is encripted
+-vm protection: convert the code in bytecode invented and its 
+super complex to reverse, used by expensive sofware and malware 
+
+y to take out your own program security is by 
+$ gcc -g -O0 -fno-stack-protector -z execstack program.c -o vuln
+
+

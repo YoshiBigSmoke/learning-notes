@@ -1,0 +1,52 @@
+2026-04-09 
+
+this are notes for how the Linux file system work
+
+-linux handles files different 
+-no hard drive C:\
+- it uses foward slashes from directory access
+- every thing start from the root directory 
+
+Paths {
+    Root
+  usr - Home
+Bin -  user - coder
+  }
+
+usr is conected to root, as well as home .
+bin is conected to usr
+home is conected to user and coder 
+
+and finally the coder conect with any app, and send data 
+as dockerfile 
+
+to check what the program, output is by:
+$ /bin/echo "$?"
+
+list all specific program 
+
+ls * #list al FILES 
+
+
+echo is for printign 
+
+grep -means global regular expression search and print 
+(you can serach anything on your sistem or file )
+
+grep "name" /direct/ion/file/ 
+
+grep -r "password" / <-- a specific word on the hole file 
+
+sudo grep -r "password" / 2>/dev/null <-- another usefull way 
+
+grep -e 'x' -e 'q' text | flag 
+
+the line " | " its called pipe
+and its used with grep to replicate it self 
+
+mail verificatin
+[a-zA -Z0-9._%+-]*@[a-zA-Z0-9.-]*
+
+
+phone number 
+([09]{3}) [0-9]{3}-[0-9]{4}

