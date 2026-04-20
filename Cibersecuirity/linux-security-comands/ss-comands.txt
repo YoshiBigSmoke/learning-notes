@@ -1,0 +1,6 @@
+ss is one of the most used comands in linuxyour pc,to know whats ports are connected to your pc, and 
+what ports are stablished 
+
+$ ss -tun (know what connections are established already)
+$ ss -tuln (listening ports)
+$ ss -tulnp (see what programs are using in a spicific port)

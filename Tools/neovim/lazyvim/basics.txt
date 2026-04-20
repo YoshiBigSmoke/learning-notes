@@ -1,0 +1,7 @@
+here we are going to put basic comands for lazy vim
+
+espace = <leader>
+
+<leader>e (open/close file tree)
+
+<leader>fe (neo-tree)
