@@ -1,0 +1,120 @@
+2026-04-22
+
+-- CERTIFICATE TRANSPARENCY LOGS & PASSIVE RECON --
+
+Certificate Transparency (CT) is a public system that logs every SSL/TLS
+certificate ever issued. browsers require it by default since 2018.
+
+when a website gets an SSL cert, the Certificate Authority (CA) MUST post it
+to at least 2 public CT logs. this is for accountability -- so nobody can issue
+fake certs silently.
+
+the result: every domain that has ever had HTTPS is recorded publicly.
+you dont need to touch the target at all to find this.
+
+-- crt.sh --
+
+crt.sh is a public search engine over those CT logs. its run by Sectigo (a CA).
+you can search it manually or hit its API:
+
+  https://crt.sh/?q=%.co&output=json     <- all .co domains with SSL certs
+  https://crt.sh/?q=%.com&output=json
+
+the % is a wildcard. %.co means "anything.co"
+
+important: crt.sh runs on PostgreSQL and gets overloaded a lot.
+you will see errors like HTTP 502 (bad gateway) or 60s timeouts.
+when that happens you just have to wait and retry. not a bug in your code.
+
+(@note - crt.sh is NOT scanning the target. its reading a public database of
+already-issued certs. completely passive. the target never knows.)
+
+-- Wayback Machine CDX API --
+
+the Internet Archive crawls the web constantly and saves snapshots.
+the CDX API lets you query which URLs they've ever crawled:
+
+  https://web.archive.org/cdx/search/cdx?url=*.co&output=text&fl=original&collapse=urlkey
+
+this finds domains that had HTTP-only sites (no SSL) -- stuff crt.sh misses.
+also finds historical domains that no longer exist.
+
+-- urlscan.io --
+
+browser-based scanning service. people submit URLs, urlscan visits them in a
+real browser and logs everything. you can search their database:
+
+  https://urlscan.io/api/v1/search/?q=domain:*.co
+
+free tier works but rate-limits hard. without an API key you'll get 401/403.
+(@note - just return empty silently on 401/403, dont crash the tool)
+
+-- passive vs active recon --
+
+passive recon: you query PUBLIC databases about the target. no packets to the
+target. no logs on their server. legally very safe.
+  examples: crt.sh, shodan, wayback, whois, DNSdumpster
+
+active recon: you actually interact with the target. they can see your IP.
+  examples: nmap, HTTP probes, banner grabbing
+
+in webexplorer:
+  phase 1 (discovery) = passive -- queries crt.sh, wayback, urlscan
+  phase 2 (verification) = active -- DNS lookup + HTTP probe to each domain
+
+the HTTP probe in phase 2 is a normal browser-level request. not aggressive.
+but technically the target sees it.
+
+-- crt.sh prefix fallback technique --
+
+crt.sh caps results per query. if you query %.co you might only get 1000 entries.
+trick: query a%.co, b%.co, c%.co ... z%.co in parallel batches.
+each letter prefix pulls a different subset of domains from the database.
+you end up with much better coverage than a single query.
+
+-- what you can find with CT logs --
+
+- all subdomains of a target (admin.example.com, staging.example.com, etc)
+- internal hostnames that leaked into public certs
+- historical domains (expired certs still in the log)
+- entire TLDs mapped out (.co, .ke, .jp, ...)
+- infrastructure patterns (what hosting providers a company uses)
+
+(@note - this is why pentesters always check crt.sh early. the client thinks
+their admin panel is hidden but if it has HTTPS it's in the CT log forever)
+
+-- SQLite cache for recon tools --
+
+when querying unreliable sources (like crt.sh) its smart to cache results locally.
+
+schema used in webexplorer:
+  CREATE TABLE domains (
+    tld TEXT NOT NULL,
+    domain TEXT NOT NULL,
+    ts INTEGER NOT NULL,      -- discovery timestamp
+    ip TEXT,
+    alive INTEGER,            -- 1=up, 0=down
+    https INTEGER,
+    status INTEGER,           -- HTTP status code
+    title TEXT,               -- page title
+    server TEXT,
+    verified_at INTEGER,
+    PRIMARY KEY (tld, domain)
+  )
+
+INSERT OR IGNORE = deduplication. if domain already exists, skip it silently.
+strict TLD isolation = when you look up .co you ONLY get .co, never .com.
+
+-- tools built today --
+
+webexplorer.py -- passive domain discovery tool
+  - queries crt.sh + wayback + urlscan in parallel (ThreadPoolExecutor)
+  - DNS + HTTP verification phase
+  - SQLite cache auto-saves every scan
+  - fallback to cache when crt.sh is down
+  - regions: africa, asia, latam, europe, middleeast, oceania, generic, new-gtld, usa, canada, uk
+
+usage:
+  python3 ~/herramientas/webexplorer.py -t .co
+  python3 ~/herramientas/webexplorer.py -r latam -l 20
+  python3 ~/herramientas/webexplorer.py --cache-info
