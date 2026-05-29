@@ -1,0 +1,19 @@
+2026-05-04
+
+in here we are going to talk about xss and how is used to steal seccion across the web.
+
+for the xss attack work there are 2 things that the web site have to 
+  have 
+
+1 - input user 
+2 - the html get it but without clean in it 
+3- the way the attack is going to spread (post, email, etc)
+
+this is a way the backend get the payload 
+
+echo "hi" .$_GET['name'];
+
+what the html generate:
+  hi <script>alert(1)</script>
+
+without sanitization there are a lot of characters that are dangerous:

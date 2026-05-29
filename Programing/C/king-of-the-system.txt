@@ -1,0 +1,36 @@
+2026-05-28
+
+si controlas C controlas el programa entero
+esto es super util en ingienieria inversa 
+dado a que el mismo puede ser perfectamente ignorado, siendo
+una barra mas que se puede explotar 
+
+tipos de caracteres 
+
+chart  - un solo caracter o un entero pequeno - 8 bits -rango ~
+-128 a 127 
+
+int - numeros enteros - 32 bits
+
+float -  numero con desimales - 32 bits
+
+si tu anades la palabra unasign int esto le dice a C "no voy a usar 
+numeros negativos usa ese espacio solo para positivos "
+esto duplica el rango (un unsigned int va de 0 a 4,294,967,295)
+3
+
+los int tienen un rango de 2147483647 si le sumas 1,
+el mismo se "resetea" dado a que en C todo es preciso
+asi que en ves de alargarse solo se baja espontaneamente a 
+-2137483647 asiendo que pase "bien". 
+
+para que un programa en C sea vulnerable tiene que tener un 
+input y un output, tiene que poder comunicarse con el mundo 
+o pedirle algo al usuario scanf() es muy vulnerable.
+
+gcc aparte de ser un ejecutable de codigo tambien se puede usar 
+para afectar los inputs 
+# gcc index.c -o hola && echo "-50" | ./hola
+
+echo "2137483648" | ./hola
+
